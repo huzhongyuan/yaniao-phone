@@ -1,0 +1,14 @@
+.header {
+  height:2.2rem;
+  /* width: 665px; */
+  background:rgba(0,0,0,1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size:0.8rem;
+  font-family:SourceHanSansCN-Regular;
+  color:rgba(255,255,255,1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
