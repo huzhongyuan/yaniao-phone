@@ -1,6 +1,9 @@
 .title {
   background: url('./../../images/indexbg.png');
 }
+#app {
+  margin-bottom: 3rem;
+}
 .title {
   height:3.5rem;
   display: flex;

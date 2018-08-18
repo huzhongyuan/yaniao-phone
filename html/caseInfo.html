@@ -1,27 +1,96 @@
 <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="utf-8">
-<script src="./common/head.js" data-title="caseInfo"></script>
-  <div class="caseInfoBox">
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <script src="./common/head.js" data-title="caseInfo"></script>
+  <div class="caseInfoBox" id="app">
     <div class="bigImg">
-        <img src="./../images/indexbg.png" alt="">
+      <img v-bind:src="bg" alt="">
     </div>
     <div class="imgList">
-        <img src="./../images/indexbg.png" alt="">
-        <img src="./../images/indexbg.png" alt="">
-        <img src="./../images/indexbg.png" alt="">
-        <img src="./../images/indexbg.png" alt="">
-        <img src="./../images/indexbg.png" alt="">
+      <img v-bind:src="item.show_url" @click="changePhoto(index)" v-for="(item, index) in photoLists" alt="">
+      <!-- <img src="./../images/indexbg.png" alt="">
+      <img src="./../images/indexbg.png" alt="">
+      <img src="./../images/indexbg.png" alt="">
+      <img src="./../images/indexbg.png" alt=""> -->
     </div>
     <div class="itemTitleBox">
-      <span class="itemTitleBoxtitle">* 项目名称</span>
-      <span class="name">四川云之滨大酒店</span>
+      <span class="itemTitleBoxtitle">{{ produce.ch_name }}</span>
+      <!-- <span class="name">四川云之滨大酒店</span> -->
     </div>
     <div class="itemcontent">
-        云之滨景豪大酒店是位于县城繁华黄金地段，富顺县富达路林达广场，酒店建筑面积11048.12平方米，酒店设施齐全，装修豪华典雅，集餐饮、客房、会议为一体，风格别致、设计新颖、功能齐全，无论是主体建筑， 酒店内设有（客房、中西式海鲜自助餐、咖啡、休闲娱乐会所（茶艺、棋牌）、会议室吧、洗浴（泡澡、桑拿、浴足）、前（商场、票务中心、VIP接待）。
+      <!-- {{ produce.description }} -->
     </div>
   </div>
-</body>
+  </body>
 
 </html>
+
+<script>
+  // getHeader();
+  let header = document.getElementsByClassName('headerTitle')[0];
+        header.innerHTML = '案例详情';
+  //获取url参数
+  let id = getQueryString('id');
+  console.log(id);
+  var app = new Vue({
+    el: '#app',
+    data: {
+      produce: {},
+      photoLists: [],
+      bg: ''
+
+    },
+    methods: {
+      changePhoto(index) {
+        console.log(index);
+        this.bg = this.photoLists[index].show_url;
+      }
+    },
+    beforeCreate: function () {
+      let that = this;
+      new Promise((resolve, reject) => {
+        $.ajax({
+          url: baseUrl + '/product/getProductPicById/' + id,
+          dataType: 'json',
+          method: 'get',
+          success: function (res) {
+            if (res.result.length == 0) {
+              alert("此页面还没有数据");
+              let to_back = document.getElementById('to_back');
+            to_back.onclick = () => {
+              window.location.href = './case.html';
+            }
+              return false;
+            }
+            console.log(res);
+            that.photoLists = res.result;
+            console.log(that.photoLists)
+            that.bg = res.result[0].show_url;
+            resolve(1);
+          }
+        })
+      }).then(() => {
+        $.ajax({
+          url: baseUrl + '/product/getProductDetailById/' + id,
+          dataType: 'json',
+          method: 'get',
+          success: function (res) {
+            console.log(res);
+            that.produce = res.result[0];
+            let itemcontent = document.getElementsByClassName('itemcontent')[0];
+            itemcontent.innerHTML = that.produce.description;
+
+            //返回上一层
+            let to_back = document.getElementById('to_back');
+            to_back.onclick = () => {
+              window.location.href = './case.html?id=' + that.produce.product_type_id;
+            }
+          }
+        })
+      })
+
+    }
+  })
+</script>

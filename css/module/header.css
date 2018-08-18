@@ -9,6 +9,16 @@
   font-family:SourceHanSansCN-Regular;
   color:rgba(255,255,255,1);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+}
+.header img{
+  width:0.53rem;
+  height:0.88rem;
+  margin-left: 1rem;
+}
+.rightblack {
+  width:0.53rem;
+  height:0.88rem;
+  margin-right: 1rem;
 }

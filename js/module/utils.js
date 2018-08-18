@@ -1,163 +1,67 @@
-//处理url参数
-function getQueryVariable(variable) {
-  var query = window.location.search.substring(1);
-  var vars = query.split("&");
-  for (var i = 0; i < vars.length; i++) {
-    var pair = vars[i].split("=");
-    if (pair[0] == variable) { return pair[1]; }
-  }
-  return (false);
+//将时间戳转化为日期格式
+function timestampToTime(timestamp) {
+  var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+  Y = date.getFullYear() + '-';
+  M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+  D = date.getDate() + ' ';
+  h = date.getHours() + ':';
+  m = date.getMinutes() + ':';
+  s = date.getSeconds();
+  return Y + M + D + h + m + s;
 }
-//首页新闻加载
-let newsload = (res) => {
-  let newsInfo = document.getElementsByClassName('newsInfo');
-  let newstitle = document.getElementsByClassName('newstitle');
-  let newscontent = document.getElementsByClassName('newscontent');
-  let newstime = document.getElementsByClassName('newstime');
-  for (let i in res.result) {
-    newstitle[i].innerHTML = res.result[i].title;
-    newscontent[i].innerHTML = res.result[i].content;
-    newstime[i].innerHTML = res.result[i].time;
-    newsInfo[i].onclick = () => {
-      window.location.href = './newsInfo.html?id=' + res.result[i].id;
-    }
-  }
-
+//获取url参数
+function getQueryString(name) {
+  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+  var r = window.location.search.substr(1).match(reg);
+  if (r != null) return unescape(r[2]); return null;
 }
 
-//首页装修类别
-let indexdes = (res) => {
-  let theme = document.getElementsByClassName('theme')[0];
-  new Promise((resolve, reject) => {
-    console.log(res);
-    for (let i in res.result) {
-      let themeimg = document.createElement('div');
-      themeimg.className = 'themeimg';
-      themeimg.innerHTML =
-        '<img src="' + res.result[i].show_url + '" alt="">' +
-        '<div class="themeInfo">' +
-        '<div class="themetitle">' + res.result[i].name + '</div>' +
-        '<div class="themename">' + res.result[i].detail + '</div>' +
-        '</div>';
-      theme.appendChild(themeimg);
-      resolve(1);
-    }
-
-  }).then(r => {
-    let themeimg = document.getElementsByClassName('themeimg');
-    let themeimglength = themeimg.length;
-    let themetitle = document.getElementsByClassName('themetitle');
-    let themename = document.getElementsByClassName('themename');
-    for (let i in themeimg) {
-      //鼠标移入装修类别
-      themeimg[i].onmouseover = () => {
-        for (let j = 0; j < themeimglength; j++) {
-          themeimg[j].style.opacity = '1';
-        }
-        themeimg[i].style.opacity = '0.5';
-      }
-      //鼠标点击装修类别
-      themeimg[i].onclick = () => {
-        console.log(res.result[i].id);
-        sessionStorage.setItem('name', res.result[i].name);
-        window.location.href = './designInfo.html?id=' + res.result[i].id;
-      }
-    }
-  })
+//匹配富文本之间的文本
+let march = (s) => {
+  var dd = s.replace(/<\/?.+?>/g, "");
+  var dds = dd.replace(/ /g, "");//dds为得到后的内容
+  return dds;
 }
+// 设置常数
+const baseUrl = 'http://118.24.159.161:8083/h5';
 
-//设计领域图片数据加载
-let designTitle = (id,url) => {
-  $.ajax({
-    data: id,
-    url: url || 'http://rapapi.org/mockjsdata/35927/shejilingyubiaotineirong',
-    success:function(res) {
-      let photolist = document.getElementsByClassName('photolist')[0];
-      for (let i in res.result) {
-        let dv = document.createElement('div');
-        dv.className = 'photolistInfo';
-        dv.innerHTML = '<img src="' + res.result[i].show_url + '" alt="">' +
-        '<div class="photoInfo">' +
-          '<div class="photoInfoname">' + res.result[i].name + '</div>' +
-        '</div>';
-        photolist.appendChild(dv);
-      }
-      let photolistInfo = document.getElementsByClassName('photolistInfo');
-      for (let i in res.result) {
-        photolistInfo[i].onclick = () => {
-          window.location.href = './designInfo_child.html?id=' + res.result[i].id;
-        }
-      }
-    }
-  })
-}
-//设计领域首页
-let designIndex = (res) => {
-  //标题加载
-  new Promise(() => {
-    let themelist = document.getElementsByClassName('themelist')[0];
-    for (let i in res.result) {
-      let themelisttitle = document.createElement('span');
-      themelisttitle.className = 'themelisttitle';
-      themelisttitle.innerHTML = res.result[i].name;
-      themelist.appendChild(themelisttitle);
-    };
-    designTitle(res.result[0].id); //首次加载渲染数据
-    let themelisttitle = document.getElementsByClassName('themelisttitle');
-    for (let i in res.result) {
-      //点击选项卡渲染数据
-      themelisttitle[i].onclick = () => {
-        sessionStorage.setItem('name',res.result[i].name);
-        window.location.href = './designInfo.html?id=' + res.result[i].id;
-      }
-    }
-  })
-}
+// 获取基本信息
+let timeStamp = Date.parse(new Date());
+let token = timeStamp + 'hopynrztoken';
+token = md5(token).toUpperCase();
 
-//新闻中心
-let loadnews = (res) => {
-  let newscontent = document.getElementsByClassName('newscontent')[0];
-  newscontent.innerHTML = '';
-  for (let i in res.result) {
-    let newslist = document.createElement('div');
-    newslist.className = 'newslist';
-    newslist.innerHTML = '<img src="' + res.result[i].show_url + '" alt="">' +
-    '<div class="newslistbox">' +
-      '<div class="newslisttitle">' + res.result[i].title + '</div>' +
-      '<div class="newslisttime">' +  + res.result[i].time +  + '</div>' +
-      '<div class="newslistcontent">' + res.result[i].content + '</div>' +
-    '</div>';
-    newscontent.appendChild(newslist);
-  }
-  for (let i in res.result) {
-    let newslist = document.getElementsByClassName('newslist');
-    newslist[i].onclick = () => {
-      sessionStorage.setItem('newsname',res.result[i].title);
-      window.location.href = './newsInfo.html?id=' + res.result[i].id;
-    }
+// 设置接口token
+$(document).ajaxSend(function (event, xhr) {
+  xhr.setRequestHeader("token", token);
+  xhr.setRequestHeader("timeStamp", timeStamp);
+});
+
+//返回上一页
+let back = () => {
+  let to_back = document.getElementById('to_back');
+  to_back.onclick = () => {
+    window.history.go(-1);
   }
 }
 
-let ajax = (url, des, num) => {
-  $.ajax({
-    url: url,
-    data: {
-      num: num
-    },
-    success: function (res) {
-      if (des == 'indexnews') {
-        newsload(res);    //首页新闻加载 
-      } else if (des == 'indexdes') {
-        indexdes(res);  //首页装修类别
-      } else if (des == 'design') {
-        designIndex(res); //设计领域首页
-      } else if(des == 'news') {
-        loadnews(res);
+//得到头部标签
+let getHeader = () => {
+  if (sessionStorage.getItem('resHeader')) {
+    let header = document.getElementsByClassName('headerTitle')[0];
+    let resHeader = sessionStorage.getItem('resHeader');
+    resHeader = JSON.parse(resHeader);
+    header.innerHTML = resHeader.name;
+  } else {
+    $.ajax({
+      url: baseUrl + '/siteInfo',
+      dataType: 'json',
+      method: 'get',
+      success: function (res) {
+        let header = document.getElementsByClassName('headerTitle')[0];
+        header.innerHTML = res.siteInfo.name;
       }
-    },
-    error: function (res) {
-      console.log(res);
-    }
-  })
-  // console.log(url)
+    })
+  }
 }
+
+

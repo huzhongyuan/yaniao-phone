@@ -1,42 +1,76 @@
 <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="utf-8">
-<script src="./common/head.js" data-title="team"></script>
-<div class="teamheader">
-  <div class="teamTitle">专业团队</div>
-  <div class="teamcontent">作为专业的综合性软装作为专业的综合性软装星作为专业的综合性软装星作为专业的综合性软装星作为专业的综合性软装星星</div>
-</div>
-<div class="menberBox">
-    <div class="menberList">
-        <div class="menberPhoto">
-            <img src="./../images/indexbg.png" alt="">
-        </div>
-        <div class="menberIntroduce">
-            <div>
-                <span class="name">唐茜</span>
-                <span class="position">运营总监</span>
-            </div>
-            <div class="school">
-                    毕业西安美术学院。毕业西安美术学院。安美术学院。毕业西安美毕业西安美术学院。毕业西安美术学院。
-            </div>
-            <div class="introduce">
-                    主修油画，选修艺术史、室
-                    内设计、国画、雕塑。主修油画，选修艺术史、室
-                    内设计、国画、雕塑。主修油画，选修艺术史、室
-                    内设计、国画、雕塑。主修油画，选修艺术史、室
-                    内设计、国画、雕塑。主修油画，选修艺术史、室
-                    内设计、国画、雕塑。
-            </div>
-            <div class="compolet">
-                    <div class="competetitle">已完成项目:</div>
-                    <div class="comInfo">达州银杏柏乐酒店、宜必思
-                            连锁酒店、重庆·光宇戴斯...州银杏柏乐酒店、宜必思
-                            连锁酒店、重庆·光宇戴斯.州银杏柏乐酒店、宜必思
-                            连锁酒店、重庆·光宇戴斯.</div>
-            </div>
-        </div>
-    </div>
-</div>
+<html lang="en">
 
-<script src="./common/foot.js" data-title="team"></script>
+<head>
+    <meta charset="utf-8">
+    <script src="./common/head.js" data-title="team"></script>
+    <div id="app">
+        <div class="teamheader">
+            <div class="teamTitle">专业团队</div>
+            <div class="teamcontent">作为专业的综合性软装作为专业的综合性软装星作为专业的综合性软装星作为专业的综合性软装星作为专业的综合性软装星星</div>
+        </div>
+        <div class="menberBox" v-for="(item,index) in menberList" @click="to_menberInfo(index)">
+            <div class="menberList">
+                <div class="menberPhoto">
+                    <img v-bind:src="item.show_url" alt="">
+                </div>
+                <div class="menberIntroduce">
+                    <div>
+                        <span class="name">{{item.name}}</span>
+                        <span class="position">{{ item.station_name }}</span>
+                    </div>
+                    <div class="school">
+                        <!-- {{ item.description }} -->
+                    </div>
+                    <!-- <div class="introduce">
+                        主修油画，选修艺术史、室 内设计、国画、雕塑。主修油画，选修艺术史、室 内设计、国画、雕塑。主修油画，选修艺术史、室 内设计、国画、雕塑。主修油画，选修艺术史、室 内设计、国画、雕塑。主修油画，选修艺术史、室 内设计、国画、雕塑。
+                    </div>
+                    <div class="compolet">
+                        <div class="competetitle">已完成项目:</div>
+                        <div class="comInfo">达州银杏柏乐酒店、宜必思 连锁酒店、重庆·光宇戴斯...州银杏柏乐酒店、宜必思 连锁酒店、重庆·光宇戴斯.州银杏柏乐酒店、宜必思 连锁酒店、重庆·光宇戴斯.
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="./common/foot.js" data-title="team"></script>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                menberList: []
+            },
+            methods: {
+                to_menberInfo:function(index) {
+                    window.location.href = './menberInfo.html?id='+this.menberList[index].id;
+                }
+            },
+            beforeCreate: function () {
+                let that = this;
+                new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: baseUrl + '/staff/getStaffById',
+                        dataType: 'json',
+                        method: 'get',
+                        success: function (res) {
+                            console.log(res);
+                            that.menberList = res.result;
+                            // for (let i in that.menberList) {
+                            //     that.menberList[i].description = march(that.menberList[i].description)
+                            // }
+                            resolve(1);
+                        }
+                    })
+                }).then( ()=> {
+                    let school = document.getElementsByClassName('school');
+                    for (let i in that.menberList) {
+                        school[i].innerHTML = that.menberList[i].description;
+                    }
+
+                })
+            }
+        })
+    </script>

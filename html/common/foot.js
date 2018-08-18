@@ -6,21 +6,11 @@ let foot ='<footer class="aui-bar aui-bar-tab footer" id="footer">' +
 document.write(foot);
 
 
-// 设置常数
-const baseUrl = 'http://118.24.159.161:8083/h5';
+let to_back = document.getElementById('to_back');
+to_back.style.visibility = 'hidden';
 
-// 获取基本信息
-let timeStamp = Date.parse(new Date());
-let token = timeStamp + 'hopynrztoken';
-token = md5(token).toUpperCase();
-
-// 设置接口token
-$(document).ajaxSend(function (event, xhr) {
-    xhr.setRequestHeader("token", token);
-    xhr.setRequestHeader("timeStamp", timeStamp);
-});
-
-
+//返回上一层
+back();
 //点击底部导航跳转
 let footNav = () => {
     let tohome = document.getElementsByClassName('tohome')[0];
@@ -66,7 +56,7 @@ let writeCommon = (resFooter, resHeader) => {
     let footer = document.getElementById('footer');
     footer.style.backgroundColor = 'rgba(0,0,0,1)';
     footer.appendChild(footerNav);
-    let header = document.getElementsByClassName('header')[0];
+    let header = document.getElementsByClassName('headerTitle')[0];
     header.innerHTML = resHeader.name;
 }
 
@@ -88,15 +78,23 @@ let footerImg = new Promise((resolve, reject) => {
         dataType: 'json',
         method: 'get',
         success: function (res) {
+        console.log(res);
         writeCommon(res.h5Footer, res.siteInfo);
         sessionStorage.setItem('resFooter', JSON.stringify(res.h5Footer));
         sessionStorage.setItem('resHeader', JSON.stringify(res.siteInfo));
         footNav();
+        resolve(1);
         }
     })
+}).then (() => {
+  siteInfo =  JSON.parse(sessionStorage.getItem('resHeader'));
+// 修改头部
+  document.title = siteInfo.name;
+  document.getElementsByTagName('meta')[6]['content'] = siteInfo.keywords;
+  document.getElementsByTagName('meta')[7]['content'] = siteInfo.description;
+  document.getElementsByTagName('link')[0]['href'] = siteInfo.icon;
 })
 }
 
 
 
-// footerNav();
