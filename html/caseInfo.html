@@ -19,7 +19,7 @@
       <span class="itemTitleBoxtitle">{{ produce.ch_name }}</span>
       <!-- <span class="name">四川云之滨大酒店</span> -->
     </div>
-    <div class="itemcontent"  v-html="produce.description"></div>
+    <div class="itemcontent" v-html="produce.description"></div>
   </div>
   </body>
 
@@ -28,7 +28,7 @@
 <script>
   // getHeader();
   let header = document.getElementsByClassName('headerTitle')[0];
-        header.innerHTML = '案例详情';
+  header.innerHTML = '案例详情';
   //获取url参数
   let id = getQueryString('id');
   //console.log(id);
@@ -57,9 +57,9 @@
             if (res.result.length == 0) {
               alert("此页面还没有数据");
               let to_back = document.getElementById('to_back');
-            to_back.onclick = () => {
-              window.location.href = './case.html';
-            }
+              to_back.onclick = () => {
+                window.location.href = './case.html';
+              }
               return false;
             }
             //console.log(res);

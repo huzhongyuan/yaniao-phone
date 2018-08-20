@@ -33,14 +33,14 @@
       data: {
         type: [],
         content: '',
-        colors:[]
+        colors: []
       },
       methods: {
         changeTable(index) {
           let that = this;
           returnColor(that);
           let content = document.getElementById('content');
-            content.innerHTML = that.type[index].description;
+          content.innerHTML = that.type[index].description;
           that.colors[index] = '#C31022';
         }
       },

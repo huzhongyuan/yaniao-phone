@@ -17,7 +17,7 @@
 <script>
   // getHeader();
   let header = document.getElementsByClassName('headerTitle')[0];
-        header.innerHTML = '新闻详情';
+  header.innerHTML = '新闻详情';
   //获取url参数
   let id = getQueryString('id');
   let index = getQueryString('index');
@@ -35,32 +35,32 @@
       let that = this;
       new Promise((resolve, reject) => {
         $.ajax({
-            url: baseUrl + '/articlePush/getArticleDetail/' + id,
-            dataType: 'json',
-            method: 'get',
-            success: function (res) {
-              //console.log(res);
-              // if (!res.result.show_url) {
-              //   res.result.show_url = 'http://www.watx365.com/img/zwimg.png';
-              // }
-              res.result.pushTime = timestampToTime(res.result.pushTime);
-              that.product = res.result;
-              resolve(1);
-            }
-          })
+          url: baseUrl + '/articlePush/getArticleDetail/' + id,
+          dataType: 'json',
+          method: 'get',
+          success: function (res) {
+            //console.log(res);
+            // if (!res.result.show_url) {
+            //   res.result.show_url = 'http://www.watx365.com/img/zwimg.png';
+            // }
+            res.result.pushTime = timestampToTime(res.result.pushTime);
+            that.product = res.result;
+            resolve(1);
+          }
+        })
       }).then(() => {
         let newsContent = document.getElementsByClassName('newsContent')[0];
         newsContent.innerHTML = that.product.content;
         //返回上一层
-          let to_back = document.getElementById('to_back');
-          to_back.onclick = () => {
-            if (index && index == 0) {
-              window.location.href = './home.html';
-            } else {
-              window.location.href = './news.html?id=' + that.product.articleType;
-            }
-           
+        let to_back = document.getElementById('to_back');
+        to_back.onclick = () => {
+          if (index && index == 0) {
+            window.location.href = './home.html';
+          } else {
+            window.location.href = './news.html?id=' + that.product.articleType;
           }
+
+        }
       })
 
     }

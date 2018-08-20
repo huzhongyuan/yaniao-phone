@@ -44,22 +44,22 @@
           let id = that.types[index].id;
           that.colors[index] = '#C31022';
           $.ajax({
-              url: baseUrl + '/product/getProductListByFloorId',
-              dataType: 'json',
-              data: {
-                floorId:id
-              },
-              method: 'get',
-              success: function (res) {
-                res.result = errorimg(res.result);
-                //console.log(res);
-                that.products = res.result;
-              }
-            })
+            url: baseUrl + '/product/getProductListByFloorId',
+            dataType: 'json',
+            data: {
+              floorId: id
+            },
+            method: 'get',
+            success: function (res) {
+              res.result = errorimg(res.result);
+              //console.log(res);
+              that.products = res.result;
+            }
+          })
         },
         to_produce(index) {
           console.log(index);
-          window.location.href = './caseInfo.html?id='+this.products[index].id;
+          window.location.href = './caseInfo.html?id=' + this.products[index].id;
         }
       },
       beforeCreate: function () {
@@ -98,7 +98,7 @@
               url: baseUrl + '/product/getProductListByFloorId',
               dataType: 'json',
               data: {
-                floorId:id
+                floorId: id
               },
               method: 'get',
               success: function (res) {
@@ -115,7 +115,7 @@
               url: baseUrl + '/product/getProductListByFloorId',
               dataType: 'json',
               data: {
-                floorId:id
+                floorId: id
               },
               method: 'get',
               success: function (res) {

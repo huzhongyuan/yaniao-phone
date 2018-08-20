@@ -27,37 +27,37 @@
       //根据详情加载文章列表
       new Promise((resolve, reject) => {
         $.ajax({
-        url: baseUrl + '/articlePush/getArticleList',
-        dataType: 'json',
-        data: {
-          article_type: that.article_type,
-          pageNo: that.pageNo,
-          pageSize: 4
-        },
-        method: 'get',
-        success: function (res) {
-          //console.log(res);
-          if (res.result.length == 0) {
-            return false
-          } else {
+          url: baseUrl + '/articlePush/getArticleList',
+          dataType: 'json',
+          data: {
+            article_type: that.article_type,
+            pageNo: that.pageNo,
+            pageSize: 4
+          },
+          method: 'get',
+          success: function (res) {
             //console.log(res);
-            let products = that.products;
-            for (let i in res.result) {
-              res.result[i].push_time = timestampToTime(res.result[i].push_time);
-              res.result[i].digest = march(res.result[i].digest);
-              products.push(res.result[i]);
-            };
-            that.products = products;
-            that.pageNo++;
+            if (res.result.length == 0) {
+              return false
+            } else {
+              //console.log(res);
+              let products = that.products;
+              for (let i in res.result) {
+                res.result[i].push_time = timestampToTime(res.result[i].push_time);
+                res.result[i].digest = march(res.result[i].digest);
+                products.push(res.result[i]);
+              };
+              that.products = products;
+              that.pageNo++;
+            }
+            isload = false;
+            resolve(res);
           }
-          isload = false;
-          resolve(res);
-        }
-      })
+        })
       }).then((res) => {
         if (res.result.length < 4) {
-                that.bottom = true;
-            }
+          that.bottom = true;
+        }
       })
 
     }
@@ -81,7 +81,7 @@
         colors: [],
         types: [],
         products: [],
-        pageNo:1,
+        pageNo: 1,
         bottom: false,
         article_type: '',
       },
@@ -101,7 +101,7 @@
         }
       },
       beforeCreate: function () {
-        upload(this,loadMore);
+        upload(this, loadMore);
         let that = this;
         new Promise((resolve, reject) => {
           //加载文章类别

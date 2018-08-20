@@ -8,10 +8,10 @@
     <link rel="stylesheet" type="text/css" href="../css/module/aui-slide.css" />
     <div id="app">
 
-        <div id="aui-slide" >
-            <div class="aui-slide-wrap" >
+        <div id="aui-slide">
+            <div class="aui-slide-wrap">
                 <div class="aui-slide-node bg-dark" v-for="(item,index) in bgLists">
-                    <img class="bg" v-bind:src="item.show_url" @click="lunbo_to(index)"/>
+                    <img class="bg" v-bind:src="item.show_url" @click="lunbo_to(index)" />
                 </div>
             </div>
             <div class="aui-slide-page-wrap">
@@ -79,7 +79,7 @@
             </section>
 
             <div class="teamphotolist">
-                <img v-bind:src="item.show_url"  class="teamphotolistInfo" v-for="(item,index) in teamSecond" @click="to_details(index)" alt="">
+                <img v-bind:src="item.show_url" class="teamphotolistInfo" v-for="(item,index) in teamSecond" @click="to_details(index)" alt="">
             </div>
             <div class="more">
                 <a href="./team.html">更多</a>
@@ -100,24 +100,24 @@
                 teamFrist: [],
                 teamSecond: []
             },
-            methods:{
+            methods: {
                 lunbo_to(index) {
                     window.location.href = this.bgLists[index].herf_url;
                 },
                 //转到详细案例
                 to_case(index) {
                     sessionStorage.setItem('local', 2);
-                    window.location.href = './case.html?id='+ this.types[index].id;
+                    window.location.href = './case.html?id=' + this.types[index].id;
                 },
                 //转到人员详情
                 to_detail(index) {
-                    window.location.href = './menberInfo.html?id='+this.teamFrist[index].id;
+                    window.location.href = './menberInfo.html?id=' + this.teamFrist[index].id;
                 },
                 to_details(index) {
                     //console.log(index);
                     // console.log(this.teamFrist);
                     // console.log(this.teamSecond[index].id);
-                    window.location.href = './menberInfo.html?id='+this.teamSecond[index].id;
+                    window.location.href = './menberInfo.html?id=' + this.teamSecond[index].id;
                 },
                 //转到新闻
                 to_news() {
@@ -126,7 +126,7 @@
                 //转到新闻详情
                 to_newsList(index) {
                     let id = this.newsLists[index].id;
-                    window.location.href = './newsInfo.html?id='+ id + '&index=0';
+                    window.location.href = './newsInfo.html?id=' + id + '&index=0';
                 },
             },
             beforeCreate: function () {
@@ -145,22 +145,22 @@
                         }
                     })
                 }).then(() => {
-                //console.log(this.bgLists);
-                let w = document.body.clientWidth;
-                let h = w/2.3;
-                //构建轮播组件
-                var slide = new auiSlide({
-                    container: document.getElementById("aui-slide"),
-                    //"width":300,
-                    "height": h,
-                    "speed": 300,
-                    "autoPlay": 3000, //自动播放
-                    "pageShow": true,
-                    "pageStyle": 'dot',
-                    "loop": true,
-                    'dotPosition': 'center',
-                    // currentPage:currentFun
-                })
+                    //console.log(this.bgLists);
+                    let w = document.body.clientWidth;
+                    let h = w / 2.3;
+                    //构建轮播组件
+                    var slide = new auiSlide({
+                        container: document.getElementById("aui-slide"),
+                        //"width":300,
+                        "height": h,
+                        "speed": 300,
+                        "autoPlay": 3000, //自动播放
+                        "pageShow": true,
+                        "pageStyle": 'dot',
+                        "loop": true,
+                        'dotPosition': 'center',
+                        // currentPage:currentFun
+                    })
                     //加载类别
                     $.ajax({
                         url: baseUrl + '/floorDistribution/getFloorDistributionListByParentId?parentId=1',
@@ -216,13 +216,13 @@
                             res.result = errorimg(res.result);
                             let teamFrist = [];
                             let teamSecond = [];
-                            if(res.result.length > 3) {
-                                for (let i = 0 ; i < 3; i++) {
+                            if (res.result.length > 3) {
+                                for (let i = 0; i < 3; i++) {
                                     teamFrist.push(res.result[i]);
                                 }
                                 that.teamFrist = teamFrist;
                                 //console.log(that.teamFrist);
-                                for (let i = 3; i < res.result.length ;i ++) {
+                                for (let i = 3; i < res.result.length; i++) {
                                     teamSecond.push(res.result[i]);
                                 }
                                 that.teamSecond = teamSecond;

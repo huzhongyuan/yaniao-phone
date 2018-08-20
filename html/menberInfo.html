@@ -33,33 +33,33 @@
 <script>
     back();
     let header = document.getElementsByClassName('headerTitle')[0];
-        header.innerHTML = '团队成员';
+    header.innerHTML = '团队成员';
     let id = getQueryString('id');
     var app = new Vue({
         el: '#app',
         data: {
-            menberInfo:{}
+            menberInfo: {}
         },
         methods: {
-            
+
         },
         beforeCreate: function () {
             let that = this;
             new Promise((resolve, reject) => {
                 $.ajax({
-                        url: baseUrl + '/staff/getStaffById',
-                        dataType: 'json',
-                        method: 'get',
-                        data: {
-                            id: id
-                        },
-                        success: function (res) {
-                            //console.log(res);
-                            res.result = errorimg(res.result);
-                            that.menberInfo = res.result[0];
-                            resolve(1);
-                        }
-                    })
+                    url: baseUrl + '/staff/getStaffById',
+                    dataType: 'json',
+                    method: 'get',
+                    data: {
+                        id: id
+                    },
+                    success: function (res) {
+                        //console.log(res);
+                        res.result = errorimg(res.result);
+                        that.menberInfo = res.result[0];
+                        resolve(1);
+                    }
+                })
             }).then(() => {
                 let school = document.getElementsByClassName('school')[0];
                 school.innerHTML = that.menberInfo.description;
