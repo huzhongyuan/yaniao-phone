@@ -32,7 +32,7 @@
   display: flex;
   margin: 0.5rem;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content:space-between;
   margin-bottom: 2.8rem;
 }
 
@@ -41,7 +41,7 @@
   display: flex;
   width:8.5rem;
   height:5.5rem;
-  /* margin-right: 0.5rem; */
+  /* margin-right: 0.2rem; */
   margin-top: 0.5rem;
 }
 
@@ -75,5 +75,17 @@
 @media screen and (max-width: 374px) {
   .caseBox {
     width: 46%;
+  }
+}
+@media screen and (min-width: 550px) {
+  .caseList {
+    display: flex;
+    margin: 0.5rem;
+    flex-wrap: wrap;
+    justify-content:flex-start;
+    margin-bottom: 2.8rem;
+  }
+  .caseBox {
+    margin-right: 0.5rem;
   }
 }

@@ -17,22 +17,39 @@ let footNav = () => {
     let toteam = document.getElementsByClassName('toteam')[0];
     let tocase = document.getElementsByClassName('tocase')[0];
     let tocompany = document.getElementsByClassName('tocompany')[0];
-    tohome.onclick = () => {
+    tohome.onclick = (event) => {
+        sessionStorage.setItem('local', 0);
         window.location.href = './home.html';
+        event.stopPropagation();
     }
-    toteam.onclick = () => {
+    toteam.onclick = (event) => {
+        sessionStorage.setItem('local', 1);
         window.location.href = './team.html';
+        event.stopPropagation();
     }
-    tocase.onclick = () => {
+    tocase.onclick = (event) => {
+        sessionStorage.setItem('local', 2);
         window.location.href = './case.html';
+        event.stopPropagation();
     }
-    tocompany.onclick = () => {
+    tocompany.onclick = (event) => {
+        sessionStorage.setItem('local', 3);
         window.location.href = './company.html';
+        event.stopPropagation();
     }
 }
 // sessionStorage.setItem('resFooter', '');
 // console.log(sessionStorage.getItem('resFooter'));
 
+let onfocus = () => {
+    let local = sessionStorage.getItem('local');
+    local = parseInt(local);
+    console.log(local);
+    let resFooter = sessionStorage.getItem('resFooter');
+    resFooter = JSON.parse(resFooter);
+    resFooter[local].addImgUrl = resFooter[local].imgUrl;
+    return resFooter;
+}
 
 //写入头部和底部数据
 let writeCommon = (resFooter, resHeader) => {
@@ -68,6 +85,7 @@ if(sessionStorage.getItem('resFooter') && sessionStorage.getItem('resFooter')) {
     let resHeader = sessionStorage.getItem('resHeader');
     resFooter = JSON.parse(resFooter);
     resHeader = JSON.parse(resHeader);
+    resFooter = onfocus();
     writeCommon(resFooter, resHeader);
     footNav();
 }else {
@@ -79,9 +97,12 @@ let footerImg = new Promise((resolve, reject) => {
         method: 'get',
         success: function (res) {
         console.log(res);
-        writeCommon(res.h5Footer, res.siteInfo);
         sessionStorage.setItem('resFooter', JSON.stringify(res.h5Footer));
         sessionStorage.setItem('resHeader', JSON.stringify(res.siteInfo));
+        sessionStorage.setItem('local', 0);
+        resFooter = onfocus();
+        writeCommon(resFooter, res.siteInfo);
+        onfocus();
         footNav();
         resolve(1);
         }

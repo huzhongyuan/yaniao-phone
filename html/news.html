@@ -25,7 +25,8 @@
     let loadMore = (that) => {
       isload = true;
       //根据详情加载文章列表
-      $.ajax({
+      new Promise((resolve, reject) => {
+        $.ajax({
         url: baseUrl + '/articlePush/getArticleList',
         dataType: 'json',
         data: {
@@ -47,14 +48,18 @@
               products.push(res.result[i]);
             };
             that.products = products;
-            if (res.result.length < 4) {
-              that.bottom = true;
-            }
             that.pageNo++;
           }
           isload = false;
+          resolve(res);
         }
       })
+      }).then((res) => {
+        if (res.result.length < 4) {
+                that.bottom = true;
+            }
+      })
+
     }
     // //上拉加载
     // let upload = (that) => {
@@ -121,6 +126,7 @@
           this.article_type = this.types[index].id;
           this.products = [];
           this.pageNo = 1;
+          this.bottom = false;
           returnColor(this);
           this.colors[index] = '#C31022';
           loadMore(this);

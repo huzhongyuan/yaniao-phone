@@ -9,6 +9,13 @@ function timestampToTime(timestamp) {
   s = date.getSeconds();
   return Y + M + D + h + m + s;
 }
+
+//去除双引号
+let replaceQ = (str) => {
+  str = str.substring(1, str.length - 1);
+  return str;
+}
+
 //获取url参数
 function getQueryString(name) {
   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -104,3 +111,5 @@ let getHeader = () => {
         }
       }
     }
+
+    

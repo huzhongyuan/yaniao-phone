@@ -19,9 +19,7 @@
       <span class="itemTitleBoxtitle">{{ produce.ch_name }}</span>
       <!-- <span class="name">四川云之滨大酒店</span> -->
     </div>
-    <div class="itemcontent">
-      <!-- {{ produce.description }} -->
-    </div>
+    <div class="itemcontent"  v-html="produce.description"></div>
   </div>
   </body>
 
@@ -77,10 +75,13 @@
           dataType: 'json',
           method: 'get',
           success: function (res) {
-            console.log(res);
+            //console.log(res);
+            //res.result[0].description = htmlDecode(res.result[0].description);
+            //console.log(res);
             that.produce = res.result[0];
-            let itemcontent = document.getElementsByClassName('itemcontent')[0];
-            itemcontent.innerHTML = that.produce.description;
+            //let itemcontent = document.getElementsByClassName('itemcontent')[0];
+            //itemcontent.innerHTML = that.produce.description;
+            console.log(that.produce.description);
 
             //返回上一层
             let to_back = document.getElementById('to_back');

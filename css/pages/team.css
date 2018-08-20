@@ -21,6 +21,8 @@ body {
   font-family:SourceHanSansCN-Regular;
   color:rgba(225,225,225,1);
   line-height:0.9rem;
+  display: flex;
+  justify-content: center;
 }
 
 /* .teammenberphoto {
