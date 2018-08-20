@@ -38,6 +38,30 @@
     <script src="./common/foot.js" data-title="team"></script>
 
     <script>
+        let isload = false;
+        //加载更多
+        let loadMore = (that) => {
+            //console.log(1111);
+                new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: baseUrl + '/staff/getStaffById',
+                        dataType: 'json',
+                        method: 'get',
+                        success: function (res) {
+                            console.log(res);
+                            that.menberList = [];
+                            that.menberList.push(...res.result);
+                            resolve(1);
+                        }
+                    })
+                }).then( ()=> {
+                    let school = document.getElementsByClassName('school');
+                    for (let i in that.menberList) {
+                        school[i].innerHTML = that.menberList[i].description;
+                    }
+
+                })
+        }
         var app = new Vue({
             el: '#app',
             data: {
@@ -49,28 +73,8 @@
                 }
             },
             beforeCreate: function () {
-                let that = this;
-                new Promise((resolve, reject) => {
-                    $.ajax({
-                        url: baseUrl + '/staff/getStaffById',
-                        dataType: 'json',
-                        method: 'get',
-                        success: function (res) {
-                            console.log(res);
-                            that.menberList = res.result;
-                            // for (let i in that.menberList) {
-                            //     that.menberList[i].description = march(that.menberList[i].description)
-                            // }
-                            resolve(1);
-                        }
-                    })
-                }).then( ()=> {
-                    let school = document.getElementsByClassName('school');
-                    for (let i in that.menberList) {
-                        school[i].innerHTML = that.menberList[i].description;
-                    }
-
-                })
+                upload(this,loadMore);
+                loadMore(this);
             }
         })
     </script>

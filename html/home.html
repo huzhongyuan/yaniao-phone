@@ -126,7 +126,7 @@
                 //转到新闻详情
                 to_newsList(index) {
                     let id = this.newsLists[index].id;
-                    window.location.href = './newsInfo.html?id='+id;
+                    window.location.href = './newsInfo.html?id='+ id + '&index=0';
                 }
             },
             beforeCreate: function () {
@@ -145,11 +145,13 @@
                     })
                 }).then(() => {
                 console.log(this.bgLists);
+                let w = document.body.clientWidth;
+                let h = w/2.3;
                 //构建轮播组件
                 var slide = new auiSlide({
                     container: document.getElementById("aui-slide"),
                     //"width":300,
-                    "height": 160,
+                    "height": h,
                     "speed": 300,
                     "autoPlay": 3000, //自动播放
                     "pageShow": true,

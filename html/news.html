@@ -7,7 +7,7 @@
   <div id="app">
     <div class="title">企业资讯</div>
     <div class="titleList">
-      <span @click="change_type(index)" v-for="(item,index) in types" :style="{color:colors[index]}">{{item.description}}</span>
+      <span @click="change_type(index)" v-for="(item,index) in types" :style="{color:colors[index]}">{{item.name}}</span>
     </div>
     <div class="newscontent" v-for="(item,index) in products" @click="to_newInfo(index)">
       <img v-bind:src="item.show_url" alt="">
@@ -56,48 +56,44 @@
         }
       })
     }
-
-    //上拉加载
-    let upload = (that) => {
-      //获取滚动条当前的位置 
-      function getScrollTop() {
-        var scrollTop = 0;
-        if (document.documentElement && document.documentElement.scrollTop) {
-          scrollTop = document.documentElement.scrollTop;
-        }
-        else if (document.body) {
-          scrollTop = document.body.scrollTop;
-        }
-        return scrollTop;
-      }
-
-      //获取当前可视范围的高度 
-      function getClientHeight() {
-        var clientHeight = 0;
-        if (document.body.clientHeight && document.documentElement.clientHeight) {
-          clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight);
-        }
-        else {
-          clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight);
-        }
-        return clientHeight;
-      }
-
-      //获取文档完整的高度 
-      function getScrollHeight() {
-        return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-      }
-      window.onscroll = function () {
-        if (getScrollTop() + getClientHeight() == getScrollHeight()) {
-          //ajax从这里开始
-          //console.log(1111111)
-          if (!isload) {
-            loadMore(that);
-          }
-        }
-      }
-    }
-
+    // //上拉加载
+    // let upload = (that) => {
+    //   //获取滚动条当前的位置 
+    //   function getScrollTop() {
+    //     var scrollTop = 0;
+    //     if (document.documentElement && document.documentElement.scrollTop) {
+    //       scrollTop = document.documentElement.scrollTop;
+    //     }
+    //     else if (document.body) {
+    //       scrollTop = document.body.scrollTop;
+    //     }
+    //     return scrollTop;
+    //   }
+    //   //获取当前可视范围的高度 
+    //   function getClientHeight() {
+    //     var clientHeight = 0;
+    //     if (document.body.clientHeight && document.documentElement.clientHeight) {
+    //       clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight);
+    //     }
+    //     else {
+    //       clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight);
+    //     }
+    //     return clientHeight;
+    //   }
+    //   //获取文档完整的高度 
+    //   function getScrollHeight() {
+    //     return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    //   }
+    //   window.onscroll = function () {
+    //     if (getScrollTop() + getClientHeight() == getScrollHeight()) {
+    //       //ajax从这里开始
+    //       //console.log(1111111)
+    //       if (!isload) {
+    //         loadMore(that);
+    //       }
+    //     }
+    //   }
+    // }
     //颜色重置
     let returnColor = (that) => {
       let colors = [];
@@ -110,7 +106,6 @@
     if (getQueryString('id')) {
       id = getQueryString('id');
     }
-
     var app = new Vue({
       el: '#app',
       data: {
@@ -136,21 +131,7 @@
         }
       },
       beforeCreate: function () {
-        upload(this);
-        //  //上拉加载
-        //   var scroll = new auiScroll({
-        //     listen: true, //是否监听滚动高度，开启后将实时返回滚动高度
-        //     distance: 150 //判断到达底部的距离，isToBottom为true
-        //   }, function (ret) {
-        //     //console.log(ret);
-        //     if (ret.isToBottom == true) {
-        //       console.log(pageSize);
-        //      loadMore(this, article_type, pageSize);
-        //     }
-        //   });
-
-
-
+        upload(this,loadMore);
         let that = this;
         new Promise((resolve, reject) => {
           //加载文章类别
@@ -176,7 +157,6 @@
           // console.log(article_type);
           loadMore(this);
         });
-
       },
     })
   </script>
