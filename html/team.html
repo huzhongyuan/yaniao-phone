@@ -48,7 +48,8 @@
                     dataType: 'json',
                     method: 'get',
                     success: function (res) {
-                        console.log(res);
+                        res.result = errorimg(res.result);
+                        //console.log(res);
                         that.menberList = [];
                         that.menberList.push(...res.result);
                         resolve(1);

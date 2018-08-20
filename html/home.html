@@ -79,7 +79,7 @@
             </section>
 
             <div class="teamphotolist">
-                <img v-bind:src="item.show_url" class="teamphotolistInfo" v-for="(item,index) in teamSecond" @click="to_details(index)" alt="">
+                <img v-bind:src="item.show_url"  class="teamphotolistInfo" v-for="(item,index) in teamSecond" @click="to_details(index)" alt="">
             </div>
             <div class="more">
                 <a href="./team.html">更多</a>
@@ -89,7 +89,6 @@
     </div>
     <script type="text/javascript" src="../js/module/aui-slide.js"></script>
     <script src="./common/foot.js" data-title="home"></script>
-
     <script>
 
         var app = new Vue({
@@ -99,7 +98,7 @@
                 types: [],
                 newsLists: [],
                 teamFrist: [],
-                teamSecond: [],
+                teamSecond: []
             },
             methods:{
                 lunbo_to(index) {
@@ -107,6 +106,7 @@
                 },
                 //转到详细案例
                 to_case(index) {
+                    sessionStorage.setItem('local', 2);
                     window.location.href = './case.html?id='+ this.types[index].id;
                 },
                 //转到人员详情
@@ -127,7 +127,7 @@
                 to_newsList(index) {
                     let id = this.newsLists[index].id;
                     window.location.href = './newsInfo.html?id='+ id + '&index=0';
-                }
+                },
             },
             beforeCreate: function () {
                 let that = this;
@@ -138,13 +138,14 @@
                         dataType: 'json',
                         method: 'get',
                         success: function (res) {
-                            console.log(res);
+                            //console.log(res);
+                            res.result = errorimg(res.result);
                             that.bgLists = res.result;
                             resolve(1);
                         }
                     })
                 }).then(() => {
-                console.log(this.bgLists);
+                //console.log(this.bgLists);
                 let w = document.body.clientWidth;
                 let h = w/2.3;
                 //构建轮播组件
@@ -166,7 +167,8 @@
                         dataType: 'json',
                         method: 'get',
                         success: function (res) {
-                            console.log(res);
+                            //console.log(res);
+                            res.result = errorimg(res.result);
                             that.types = res.result;
                         }
                     })
@@ -211,6 +213,7 @@
                         method: 'get',
                         success: function (res) {
                             //console.log(res);
+                            res.result = errorimg(res.result);
                             let teamFrist = [];
                             let teamSecond = [];
                             if(res.result.length > 3) {
@@ -245,7 +248,7 @@
 
             },
             updated: function () {
-
+                //sessionStorage.setItem('local', 0);
                 // function currentFun(index) {
                 //     console.log(index);
                 // }

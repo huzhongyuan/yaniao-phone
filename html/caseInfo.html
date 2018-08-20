@@ -31,7 +31,7 @@
         header.innerHTML = '案例详情';
   //获取url参数
   let id = getQueryString('id');
-  console.log(id);
+  //console.log(id);
   var app = new Vue({
     el: '#app',
     data: {
@@ -42,7 +42,7 @@
     },
     methods: {
       changePhoto(index) {
-        console.log(index);
+        //console.log(index);
         this.bg = this.photoLists[index].show_url;
       }
     },
@@ -62,9 +62,10 @@
             }
               return false;
             }
-            console.log(res);
+            //console.log(res);
+            res.result = errorimg(res.result);
             that.photoLists = res.result;
-            console.log(that.photoLists)
+            //console.log(that.photoLists)
             that.bg = res.result[0].show_url;
             resolve(1);
           }
@@ -81,7 +82,7 @@
             that.produce = res.result[0];
             //let itemcontent = document.getElementsByClassName('itemcontent')[0];
             //itemcontent.innerHTML = that.produce.description;
-            console.log(that.produce.description);
+            //console.log(that.produce.description);
 
             //返回上一层
             let to_back = document.getElementById('to_back');

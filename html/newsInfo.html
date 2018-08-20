@@ -21,8 +21,8 @@
   //获取url参数
   let id = getQueryString('id');
   let index = getQueryString('index');
-  console.log(index);
-  console.log(id);
+  //console.log(index);
+  //console.log(id);
   var app = new Vue({
     el: '#app',
     data: {
@@ -39,7 +39,10 @@
             dataType: 'json',
             method: 'get',
             success: function (res) {
-              console.log(res);
+              //console.log(res);
+              // if (!res.result.show_url) {
+              //   res.result.show_url = 'http://www.watx365.com/img/zwimg.png';
+              // }
               res.result.pushTime = timestampToTime(res.result.pushTime);
               that.product = res.result;
               resolve(1);

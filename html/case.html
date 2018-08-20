@@ -38,7 +38,7 @@
       },
       methods: {
         change_type(index) {
-          console.log(index);
+          //console.log(index);
           let that = this;
           returnColor(that);
           let id = that.types[index].id;
@@ -51,6 +51,7 @@
               },
               method: 'get',
               success: function (res) {
+                res.result = errorimg(res.result);
                 //console.log(res);
                 that.products = res.result;
               }
@@ -78,9 +79,8 @@
             dataType: 'json',
             method: 'get',
             success: function (res) {
-              console.log(res);
+              //console.log(res);
               that.types = res.result;
-
               resolve(1);
             }
           })
@@ -119,7 +119,8 @@
               },
               method: 'get',
               success: function (res) {
-                console.log(res);
+                res.result = errorimg(res.result);
+                //console.log(res);
                 that.products = res.result;
               }
             })

@@ -1,3 +1,8 @@
+//当屏幕尺寸大于750px跳转到PC端
+let w = document.body.clientWidth;
+if (w >= 750) {
+  window.location.href = 'http://www.yaniaozg.com';
+}
 //将时间戳转化为日期格式
 function timestampToTime(timestamp) {
   var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -112,4 +117,33 @@ let getHeader = () => {
       }
     }
 
-    
+    // //图片加载错误
+    // function onfind(img) {
+    //   console.log(1111);
+    //   img.src="./../images/add.png";
+    //   img.onerror=null;
+    // }
+
+//图片加载失败显示默认图片
+let errorimg = (res) => {
+  for (let i in res) {
+    if (!res[i].show_url) {
+      res[i].show_url = 'http://www.watx365.com/img/zwimg.png';
+    }
+  }
+  return res;
+}
+
+
+// //设置图片加载失败默认图片
+// function imgNotfind(e) {
+//   console.log(111111);
+//   var img = e.srcElement;
+//   img.src = "http://www.watx365.com/img/zwimg.png";
+// }
+
+// //设置默认图片
+// function imgDefault(e) {
+//   var img = e.srcElement;
+//   img.src = "/img/forme3.png";
+// }

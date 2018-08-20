@@ -36,7 +36,7 @@
         },
         method: 'get',
         success: function (res) {
-          console.log(res);
+          //console.log(res);
           if (res.result.length == 0) {
             return false
           } else {
@@ -61,44 +61,8 @@
       })
 
     }
-    // //上拉加载
-    // let upload = (that) => {
-    //   //获取滚动条当前的位置 
-    //   function getScrollTop() {
-    //     var scrollTop = 0;
-    //     if (document.documentElement && document.documentElement.scrollTop) {
-    //       scrollTop = document.documentElement.scrollTop;
-    //     }
-    //     else if (document.body) {
-    //       scrollTop = document.body.scrollTop;
-    //     }
-    //     return scrollTop;
-    //   }
-    //   //获取当前可视范围的高度 
-    //   function getClientHeight() {
-    //     var clientHeight = 0;
-    //     if (document.body.clientHeight && document.documentElement.clientHeight) {
-    //       clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight);
-    //     }
-    //     else {
-    //       clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight);
-    //     }
-    //     return clientHeight;
-    //   }
-    //   //获取文档完整的高度 
-    //   function getScrollHeight() {
-    //     return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-    //   }
-    //   window.onscroll = function () {
-    //     if (getScrollTop() + getClientHeight() == getScrollHeight()) {
-    //       //ajax从这里开始
-    //       //console.log(1111111)
-    //       if (!isload) {
-    //         loadMore(that);
-    //       }
-    //     }
-    //   }
-    // }
+
+
     //颜色重置
     let returnColor = (that) => {
       let colors = [];
@@ -146,7 +110,7 @@
             dataType: 'json',
             method: 'get',
             success: function (res) {
-              console.log(res);
+              //console.log(res);
               that.types = res.result;
               returnColor(that);
               that.colors[0] = '#C31022';

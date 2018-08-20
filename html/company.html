@@ -52,7 +52,7 @@
           dataType: 'json',
           method: 'get',
           success: function (res) {
-            console.log(res);
+            //console.log(res);
             that.type = res.result;
             let content = document.getElementById('content');
             content.innerHTML = that.type[0].description;

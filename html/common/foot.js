@@ -44,7 +44,7 @@ let footNav = () => {
 let onfocus = () => {
     let local = sessionStorage.getItem('local');
     local = parseInt(local);
-    console.log(local);
+    //console.log(local);
     let resFooter = sessionStorage.getItem('resFooter');
     resFooter = JSON.parse(resFooter);
     resFooter[local].addImgUrl = resFooter[local].imgUrl;

@@ -23,7 +23,7 @@
   '<link rel="stylesheet" href="./../css/module/header.css">' +
   '<link rel="stylesheet" href="./../css/module/footer.css">' +
   '<link rel="stylesheet" href="./../css/pages/' + headTitle + '.css">' +
-  '<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>' +
+  '<script src="./../js/module/vue.js"></script>' +
   '<script src="./../js/lib/jquery-3.1.1.min.js"></script>' +
   '<script src="./../js/module/md5.js"></script>' +
   '<script src="./../js/module/utils.js"></script>' +
@@ -37,7 +37,7 @@
     siteInfo =  JSON.parse(sessionStorage.getItem('resHeader'));
       // 修改头部
   document.title = siteInfo.name;
-  console.log(siteInfo);
+  //console.log(siteInfo);
   document.getElementsByTagName('meta')[6]['content'] = siteInfo.keywords;
   document.getElementsByTagName('meta')[7]['content'] = siteInfo.description;
   document.getElementsByTagName('link')[0]['href'] = siteInfo.icon;
