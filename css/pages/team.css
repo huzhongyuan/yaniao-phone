@@ -24,7 +24,18 @@ body {
   display: flex;
   justify-content: center;
 }
-
+.teamcontent p{
+  color:rgba(255,255,255,1);
+}
+.teamcontent span{
+  color:rgba(255,255,255,1);
+}
+.teamcontent div{
+  color:rgba(255,255,255,1);
+}
+.teamcontent text{
+  color:rgba(255,255,255,1);
+}
 /* .teammenberphoto {
   width:10rem;
   height:7rem;
